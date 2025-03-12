@@ -1,4 +1,7 @@
 
+# Bot do estoque implementado
+
+![Bot implementado](../../../images/image%20(1).png)
 
 # Estrutura de Integração
 
@@ -33,15 +36,23 @@ A integração segue uma arquitetura baseada em eventos, onde o estoque é monit
 
 ### Fluxo de integração
 
-![Diagrama UML](../../../diagramas/image.png)
+![Diagrama UML](../../../images/image.png)
 
 
-1- Usuário adiciona um item ao pedido no Rappi
-2️- estoque é atualizado automaticamente 
-3️- Se o estoque ficar abaixo de 5 unidades, a API:
-   - Notifica o WebSocket
-   - Dispara um alerta no Telegram
-4 - O entregador recebe a notificação e pode agir rapidamente
+### Etapas do Fluxo
+1. O Cliente realiza um pedido no App da Rappi.
+    - O pedido é enviado para processamento.
+2. O App da Rappi consulta o estoque para verificar a disponibilidade do produto.
+    - Essa etapa ocorre antes da confirmação do pedido.
+3. O estoque responde se o produto está disponível.
+    - Caso o produto esteja disponível, a solicitação segue para confirmação.
+    - Caso contrário, um alerta pode ser gerado.
+4. Confirmação do Pedido.
+    - O App da Rappi confirma a compra para o cliente.
+    - Se o produto estiver disponível, a compra segue normalmente.
+5. Se o estoque estiver baixo, um alerta é enviado pelo Telegram.
+    - Isso notifica o entregador para evitar idas desnecessárias ao mercado.
+    - O alerta pode indicar produtos indisponíveis ou sugestões de substituição.
 
 
 ### Controle de Qualidade da Integração
@@ -73,7 +84,7 @@ def enviar_mensagem_telegram(mensagem: str):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {"chat_id": TELEGRAM_CHAT_ID, "text": mensagem}
 
-    for tentativa in range(3):  # Tentar 3 vezes em caso de falha
+    for tentativa in range(3):
         try:
             response = requests.post(url, json=payload, timeout=5)
             if response.status_code == 200:
