@@ -70,12 +70,6 @@ Os seguintes pontos garantem a qualidade da integração:
 
    ![Bot implementado](../../../images/image%20(2).png)
 
-**Tratamento de Exceções**
-   - Caso a API do Telegram falhe → **Repetir a requisição até 3 vezes** antes de registrar um erro.
-   - Se um WebSocket desconectar → **Remover conexão da lista ativa** sem afetar os demais usuários.
-   - Se o monitoramento falhar → **Logar erro e reiniciar a tarefa automaticamente**.
-
-
 ### Exemplo de Tratamento de Exceções no Código
 ```python
 def enviar_mensagem_telegram(mensagem: str):
