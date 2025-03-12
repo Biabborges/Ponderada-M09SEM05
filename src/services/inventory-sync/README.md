@@ -14,13 +14,10 @@ A integração segue uma arquitetura baseada em eventos, onde o estoque é monit
      - WebSocket (`/ws/estoque`) → Comunicação em tempo real
   2. **Camada de Processamento**  
      - Monitoramento contínuo do estoque (Tarefa assíncrona `monitorar_estoque()`)  
-     - Gatilhos para enviar notificações quando estoque <5 unidades  
+     - Gatilhos para enviar notificações quando estoque for menos que 5 unidades  
   3. **Camada de Notificação**  
-     - WebSocket → Notifica clientes conectados  
-     - Telegram Bot API → Envia alertas para entregadores  
-  4. **Camada de Persistência** (opcional)  
-     - Neste caso, usamos um **dicionário em memória**, mas poderia ser um banco de dados como PostgreSQL ou Redis.  
-
+     - *WebSocket* → Notifica clientes conectados  
+     - *Telegram Bot API* → Envia alertas para entregadores  
 
 ### Módulos e Componentes
 | **Módulo**  | **Descrição**  |
@@ -37,7 +34,6 @@ A integração segue uma arquitetura baseada em eventos, onde o estoque é monit
 ### Fluxo de integração
 
 ![Diagrama UML](../../../images/image.png)
-
 
 ### Etapas do Fluxo
 1. O Cliente realiza um pedido no App da Rappi.
