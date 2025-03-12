@@ -66,7 +66,9 @@ Os seguintes pontos garantem a qualidade da integração:
 
 **Controle de Versões**
    - GitHub para versionamento do código
-   - Uso de tags para marcar versões (`v1.0`, `v1.1`, etc.)
+   - Uso de releases para marcar a versão:
+
+   ![Bot implementado](../../../images/image%20(2).png)
 
 **Tratamento de Exceções**
    - Caso a API do Telegram falhe → **Repetir a requisição até 3 vezes** antes de registrar um erro.
@@ -77,6 +79,10 @@ Os seguintes pontos garantem a qualidade da integração:
 ### Exemplo de Tratamento de Exceções no Código
 ```python
 def enviar_mensagem_telegram(mensagem: str):
+    """
+    Tenta enviar uma mensagem para o Telegram com até 3 tentativas.
+    Em caso de falha, exibe um erro no log.
+    """
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {"chat_id": TELEGRAM_CHAT_ID, "text": mensagem}
 
